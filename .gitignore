@@ -1,0 +1,7 @@
+install/
+build/
+log/
+__pycache__/
+*.ipynb_checkpoints
+.bash_history
+.vscode/

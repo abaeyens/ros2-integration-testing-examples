@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "source /opt/ros/jazzy/setup.bash && exec bash"
+    working_dir: ${PWD}
+    volumes:
+      - ./:${PWD}
+      - /dev:/dev
+      - /tmp:/tmp
+      - /var/log/journal:/var/log/journal
+      - ${XAUTHORITY}:/home/user/.Xauthority:ro
+    environment:
+      # Graphics
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      # ROS 2
+      - COLCON_HOME=${PWD}/.colcon
+      #- ROS_DOMAIN_ID=0
+      # Other
+      - HISTFILE=${PWD}/.bash_history
+    devices:
+      - /dev/dri:/dev/dri  # Allow access to GPU devices if needed
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+    ulimits:
+      core: 0
+    shm_size: 256m

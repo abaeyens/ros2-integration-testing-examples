@@ -1,0 +1,4 @@
+<launch>
+  <!-- Simulator -->
+  <node pkg="turtlesim" exec="turtlesim_node" name="sim" />
+</launch>
