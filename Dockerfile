@@ -1,26 +1,13 @@
-FROM ubuntu:24.04@sha256:ab64a8382e935382638764d8719362bb50ee418d944c1f3d26e0c99fae49a345
+FROM ros:jazzy-ros-base
 RUN touch /var/mail/ubuntu && chown ubuntu /var/mail/ubuntu && userdel -r ubuntu
 
 
-# ROS2
-## Install prerequisites
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl wget gnupg2 lsb-release \
-    software-properties-common \
-    && rm -rf /var/lib/apt/lists/*
-RUN \
-    ## Enable required repositories
-    add-apt-repository universe && \
-    ## Add ROS 2 GPG key
-    curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-    ## Add the repo to sources list
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
-## Install ROS 2 including dev tools
+# Additional packages
 RUN apt update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ros-dev-tools \
-    ros-jazzy-desktop \
+    ros-jazzy-turtlesim \
+    ros-jazzy-ros-testing \
     && rm -rf /var/lib/apt/lists/*
 
 # Install xUnit viewer
