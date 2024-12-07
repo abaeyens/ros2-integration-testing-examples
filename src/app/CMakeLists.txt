@@ -72,3 +72,5 @@ if(FALSE)
   # 3: with setup.py instead of CMakeLists.txt => both disadvantages
   #    (though do get automatic test discovery)
 endif()
+
+ament_package()
