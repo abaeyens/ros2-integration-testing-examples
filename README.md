@@ -21,8 +21,12 @@ and the [CMakeLists.txt](src/app/CMakeLists.txt)
 ## Get up and running
 ```bash
 git clone git@github.com:abaeyens/ros2-integration-testing-examples.git
+cd ros2-integration-testing-examples
+
+echo -e USER_ID=$(id -u $USER)\\nGROUP_ID=$(id -g $USER) >> .env
 docker compose build --pull
 docker compose run --rm app bash
+
 colcon build
 source install/setup.bash
 colcon test --event-handlers console_direct+
