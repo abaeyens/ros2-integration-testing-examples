@@ -3,6 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        USER: ${USER}
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
     command: bash -c "source /opt/ros/jazzy/setup.bash && exec bash"
     working_dir: ${PWD}
     volumes:
@@ -10,7 +14,7 @@ services:
       - /dev:/dev
       - /tmp:/tmp
       - /var/log/journal:/var/log/journal
-      - ${XAUTHORITY}:/home/user/.Xauthority:ro
+      - ${XAUTHORITY:-/home/${USER}/.Xauthority}:/home/${USER}/.Xauthority:ro
     environment:
       # Graphics
       - DISPLAY=${DISPLAY}
