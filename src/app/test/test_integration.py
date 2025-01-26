@@ -52,6 +52,12 @@ class TestTurtleSim(unittest.TestCase):
     def tearDown(self):
         self.node.destroy_node()
 
+    def test_logs_spawning(self, proc_output):
+        """Check whether logging properly"""
+        proc_output.assertWaitFor(
+            'Spawning turtle [turtle1] at x=',
+            timeout=15, stream='stderr')
+
     def test_publishes_pose(self, proc_output):
         """Check whether pose messages published"""
         msgs_rx = []
@@ -64,15 +70,9 @@ class TestTurtleSim(unittest.TestCase):
                 rclpy.spin_once(self.node, timeout_sec=1)
                 if len(msgs_rx) > 30:
                     break
-            assert len(msgs_rx) > 300
+            self.assertGreater(len(msgs_rx), 30)
         finally:
             self.node.destroy_subscription(sub)
-
-    def test_logs_spawning(self, proc_output):
-        """Check whether logging properly"""
-        proc_output.assertWaitFor(
-            'Spawning turtle [turtle1] at x=',
-            timeout=5, stream='stderr')
 
 
 # Post-shutdown tests

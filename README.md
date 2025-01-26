@@ -11,6 +11,7 @@ to avoid crosstalk between simultaneously running tests.
 
 A ROS 2 Jazzy Docker setup is included to get started quickly.
 This code probably also works on Humble and Iron.
+Please see the instructions further on for creating the `.env` file.
 
 For more documentation, please have a look at the code files
 in the `app` package such as
@@ -33,3 +34,7 @@ colcon test --event-handlers console_direct+
 colcon test-result --all
 xunit-viewer -r build/app/test_results -c
 ```
+
+## Notes
+- The tests include launching a turtlesim GUI,
+  hence the tests may fail on a headless system.
